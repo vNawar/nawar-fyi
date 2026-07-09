@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
   siteName: "Nawar.fyi",
   ownerName: "Nawar Alhussain",
   brandInitial: "N",
-  email: "NawarAlhussain@hotmail.com",
+  email: "NawarAlhussain@hotmail.com", 
 
   hero: {
     eyebrow: "Network · Infrastructure · Industrial IT",
