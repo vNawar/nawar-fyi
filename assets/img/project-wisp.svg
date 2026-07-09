@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#061817"/><stop offset="1" stop-color="#233016"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="28"/></filter></defs>
+  <rect width="1200" height="750" rx="44" fill="url(#bg)"/>
+  <circle cx="920" cy="210" r="220" fill="#30E6C2" opacity=".08" filter="url(#blur)"/>
+  <g stroke="#7DF8D9" stroke-width="6" fill="none" opacity=".88">
+    <path d="M600 170c120 60 190 153 215 286"/><path d="M600 230c82 45 137 119 158 224"/><path d="M600 290c48 32 83 86 98 164"/>
+    <path d="M600 170c-120 60-190 153-215 286"/><path d="M600 230c-82 45-137 119-158 224"/><path d="M600 290c-48 32-83 86-98 164"/>
+  </g>
+  <path d="M600 235l-95 380h190l-95-380z" fill="#0A211F" stroke="#30E6C2" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M600 235v380M556 410h88M535 500h130" stroke="#A1C6BF" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="600" cy="226" r="38" fill="#123A35" stroke="#7DF8D9" stroke-width="7"/>
+  <g fill="#123A35" stroke="#30E6C2" stroke-width="6"><rect x="180" y="530" width="180" height="88" rx="18"/><rect x="840" y="530" width="180" height="88" rx="18"/></g>
+  <g fill="#E9FFFB" font-family="Inter, Arial" font-size="24" font-weight="800" text-anchor="middle"><text x="270" y="582">CPE</text><text x="930" y="582">Fiber</text></g>
+  <text x="92" y="106" fill="#E9FFFB" font-family="Inter, Arial" font-size="54" font-weight="800">ISP / WISP Planning</text>
+  <text x="94" y="154" fill="#A1C6BF" font-family="Inter, Arial" font-size="28">Access networks · CPE design · fiber readiness · monitoring</text>
+</svg>
