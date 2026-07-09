@@ -13,7 +13,7 @@
   }
 
   function mailto() {
-    return `mailto:${encodeURIComponent(config.email)}`;
+    return `mailto:${config.email}`;
   }
 
   function tagsMarkup(tags) {
