@@ -1,68 +1,39 @@
-# Nawar.fyi Editable Static Website
+# Nawar.fyi project showcase
 
-This version is designed for easy editing through GitHub and automatic deployment through Cloudflare Pages.
+Static portfolio site for Nawar Alhussain.
 
-## What to edit most of the time
+Main positioning: **IT Infrastructure Engineer**.
 
-Edit this file:
+The site keeps the original visual style: Home page, Projects page, tabs, cards, and image asset visuals. Content was updated from the comprehensive master CV to emphasize job-market-relevant areas: infrastructure, networking, systems, ERP/data, technical operations, virtualization, data center readiness, and ISP/WISP direction.
 
-```text
-assets/js/site-config.js
-```
+## Edit content
 
-You can change:
-
-- Email address
-- Hero text
-- Skill cards
-- Project titles
-- Project descriptions
-- Project tags
-- Project image paths
-
-## How images work
-
-The site currently uses SVG placeholder images in:
+Most text, skills, project cards, and image paths are controlled from:
 
 ```text
-assets/img/
+assets/js/site-data.js
 ```
 
-For your real screenshots/photos, upload them to:
+## Replace images
+
+Image asset images are under:
+
+```text
+assets/img/image assets/
+```
+
+Add your real screenshots/photos under:
 
 ```text
 assets/img/projects/
 ```
 
-Then edit `assets/js/site-config.js` and point the project image to the new file:
+Then update the image paths in `assets/js/site-data.js`.
 
-```js
-image: "assets/img/projects/homelab-rack.jpg"
-```
+## Deploy
 
-Recommended image format:
+Push changes to the GitHub repo connected to Cloudflare Pages. No build command is required.
 
-- `.jpg` for photos
-- `.png` for screenshots
-- `.webp` for optimized images if available
+## Image update
 
-Recommended image size:
-
-- Around 1200px wide
-- Keep each image preferably under 500 KB
-
-## Local preview
-
-Open `index.html` in your browser.
-
-If your browser blocks local JavaScript file loading, run a small local server from the folder:
-
-```bash
-python3 -m http.server 8080
-```
-
-Then open:
-
-```text
-http://localhost:8080
-```
+This version includes processed project images in `assets/img/projects/` and notes in `IMAGE_NOTES.md`.

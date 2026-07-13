@@ -1,195 +1,280 @@
-(function () {
-  const config = window.SITE_CONFIG;
-  const page = document.body.dataset.page || "home";
-  const currentYear = new Date().getFullYear();
+function $(selector, root = document) {
+  return root.querySelector(selector);
+}
 
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+function $all(selector, root = document) {
+  return Array.from(root.querySelectorAll(selector));
+}
+
+function mailto() {
+  return `mailto:${SITE.email}`;
+}
+
+function setCommonContent() {
+  $all("[data-site-name]").forEach((el) => (el.textContent = SITE.name));
+  $all("[data-site-title]").forEach((el) => (el.textContent = SITE.title));
+  $all("[data-site-email]").forEach((el) => (el.textContent = SITE.email));
+  $all("[data-mailto]").forEach((el) => el.setAttribute("href", mailto()));
+}
+
+function chip(text) {
+  return `<span class="chip">${text}</span>`;
+}
+
+function projectCard(project) {
+  return `
+    <article class="project-card reveal" data-project-card-id="${project.id}" tabindex="0" role="button" data-project-card="${project.id}">
+      <a class="project-image-link" href="projects.html#${project.id}" aria-label="Open ${project.title}">
+        <img src="${project.image}" alt="${project.title} project image" loading="lazy" />
+      </a>
+      <div class="project-card-body">
+        <p class="eyebrow"><span></span>${project.category}</p>
+        <h3>${project.title}</h3>
+        <p>${project.summary}</p>
+        <div class="chips">${project.skills.slice(0, 6).map(chip).join("")}</div>
+      </div>
+    </article>`;
+}
+
+function renderHome() {
+  const heroTags = $("[data-hero-tags]");
+  if (heroTags) heroTags.innerHTML = SITE.headlineTags.map(chip).join("");
+
+  const heroSummary = $("[data-hero-summary]");
+  if (heroSummary) heroSummary.textContent = SITE.heroSummary;
+
+  const stats = $("[data-proof-stats]");
+  if (stats) {
+    stats.innerHTML = SITE.proofStats
+      .map((item) => `<div class="stat-card"><strong>${item.value}</strong><span>${item.label}</span></div>`)
+      .join("");
   }
 
-  function mailto() {
-    return `mailto:${config.email}`;
+  const coreSkills = $("[data-core-skills]");
+  if (coreSkills) {
+    coreSkills.innerHTML = SITE.coreSkills
+      .map((item) => `<article class="skill-card reveal"><h3>${item.name}</h3><p>${item.text}</p></article>`)
+      .join("");
   }
 
-  function tagsMarkup(tags) {
-    return tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+  const skillCloud = $("[data-skill-cloud]");
+  if (skillCloud) skillCloud.innerHTML = SITE.skillCloud.map(chip).join("");
+
+  const featuredProjects = $("[data-featured-projects]");
+  if (featuredProjects) {
+    featuredProjects.innerHTML = SITE.projects.slice(0, 6).map(projectCard).join("");
+  }
+}
+
+function projectTab(project, index) {
+  return `
+    <button class="project-tab ${index === 0 ? "active" : ""}" data-project-tab="${project.id}">
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <strong>${project.title}</strong>
+      <small>${project.category}</small>
+    </button>`;
+}
+
+function projectDetail(project) {
+  return `
+    <section class="project-detail-panel" data-project-panel="${project.id}">
+      <div class="project-detail-hero">
+        <div>
+          <p class="eyebrow"><span></span>${project.category}</p>
+          <h2>${project.title}</h2>
+          <p>${project.summary}</p>
+          <div class="chips large">${project.skills.map(chip).join("")}</div>
+        </div>
+        <a class="proof-image hero-proof-image" href="${project.image}" data-lightbox-src="${project.image}" data-lightbox-title="${project.title}">
+          <img src="${project.image}" alt="${project.title} main project image" loading="lazy" />
+        </a>
+      </div>
+
+      <div class="project-detail-grid">
+        <article class="detail-card">
+          <h3>Engineering highlights</h3>
+          <ul>${project.highlights.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </article>
+      </div>
+
+      <div class="gallery-grid">
+        ${project.gallery
+          .map(
+            (image) => `
+          <a class="proof-image" href="${image}" data-lightbox-src="${image}" data-lightbox-title="${project.title}">
+            <img src="${image}" alt="${project.title} gallery image" loading="lazy" />
+          </a>`
+          )
+          .join("")}
+      </div>
+    </section>`;
+}
+
+function renderProjectsPage() {
+  const tabs = $("[data-project-tabs]");
+  const panels = $("[data-project-panels]");
+  const cards = $("[data-projects-grid]");
+
+  if (cards) cards.innerHTML = SITE.projects.map(projectCard).join("");
+  if (!tabs || !panels) return;
+
+  tabs.innerHTML = SITE.projects.map(projectTab).join("");
+  panels.innerHTML = SITE.projects.map(projectDetail).join("");
+
+  function activate(id, shouldScroll = false) {
+    const target = SITE.projects.find((p) => p.id === id) || SITE.projects[0];
+    $all("[data-project-tab]").forEach((tab) => tab.classList.toggle("active", tab.dataset.projectTab === target.id));
+    $all("[data-project-panel]").forEach((panel) => panel.classList.toggle("active", panel.dataset.projectPanel === target.id));
+    history.replaceState(null, "", `#${target.id}`);
+    if (shouldScroll) $(".project-workbench")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function projectCard(project, options = {}) {
-    const large = options.large ? " project-card-large" : "";
-    const headingTag = options.large ? "h2" : "h3";
-    const linkedImage = options.linkImage
-      ? `<a class="project-image" href="projects.html#${escapeHtml(project.id)}" aria-label="${escapeHtml(project.title)} project"><img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.imageAlt)}" /></a>`
-      : `<div class="project-image"><img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.imageAlt)}" /></div>`;
+  tabs.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-project-tab]");
+    if (!button) return;
+    activate(button.dataset.projectTab, true);
+  });
 
-    return `
-      <article class="project-card${large}" id="${escapeHtml(project.id)}">
-        ${linkedImage}
-        <div class="project-body">
-          ${options.showEyebrow ? `<p class="eyebrow">${escapeHtml(project.eyebrow)}</p>` : ""}
-          <${headingTag}>${escapeHtml(project.title)}</${headingTag}>
-          <p>${escapeHtml(project.summary)}</p>
-          <div class="tag-list">${tagsMarkup(project.tags)}</div>
-        </div>
-      </article>
-    `;
+  activate(location.hash.replace("#", "") || SITE.projects[0].id, false);
+}
+
+
+function ensureLightbox() {
+  let lightbox = $("[data-lightbox]");
+  if (lightbox) return lightbox;
+
+  lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  lightbox.setAttribute("data-lightbox", "");
+  lightbox.setAttribute("aria-hidden", "true");
+  lightbox.innerHTML = `
+    <button class="lightbox-backdrop" type="button" aria-label="Close image preview"></button>
+    <figure class="lightbox-frame">
+      <button class="lightbox-close" type="button" aria-label="Close image preview">×</button>
+      <img data-lightbox-image alt="Expanded project image" />
+      <figcaption data-lightbox-caption></figcaption>
+    </figure>`;
+  document.body.appendChild(lightbox);
+  return lightbox;
+}
+
+function openLightbox(src, title = "") {
+  const lightbox = ensureLightbox();
+  const image = $("[data-lightbox-image]", lightbox);
+  const caption = $("[data-lightbox-caption]", lightbox);
+  image.src = src;
+  image.alt = title ? `${title} expanded image` : "Expanded project image";
+  caption.textContent = title;
+  lightbox.classList.add("active");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("lightbox-open");
+}
+
+function closeLightbox() {
+  const lightbox = $("[data-lightbox]");
+  if (!lightbox) return;
+  lightbox.classList.remove("active");
+  lightbox.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("lightbox-open");
+}
+
+function initLightbox() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-lightbox-src]");
+    if (link) {
+      event.preventDefault();
+      openLightbox(link.dataset.lightboxSrc, link.dataset.lightboxTitle || "");
+      return;
+    }
+
+    if (event.target.closest(".lightbox-close") || event.target.closest(".lightbox-backdrop")) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeLightbox();
+  });
+}
+
+function revealOnScroll() {
+  const items = $all(".reveal");
+  if (!items.length || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  items.forEach((item) => observer.observe(item));
+}
+
+function init() {
+  setCommonContent();
+  renderHome();
+  renderProjectsPage();
+  initLightbox();
+  revealOnScroll();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+
+
+/* Project card navigation */
+function activateProjectFromCard(projectId) {
+  const projectPageHasTabs = Boolean(document.querySelector("[data-project-tabs]"));
+
+  // On the homepage, project cards should still navigate to the Projects page.
+  if (!projectPageHasTabs) {
+    window.location.href = `projects.html#${projectId}`;
+    return;
   }
 
-  function renderHeader() {
-    const header = document.getElementById("site-header");
-    if (!header) return;
+  const targetTab = document.querySelector(`[data-project-tab="${projectId}"]`);
 
-    header.innerHTML = `
-      <header class="site-header" data-header>
-        <div class="container nav-wrap">
-          <a class="brand" href="index.html" aria-label="${escapeHtml(config.ownerName)} homepage">
-            <span class="brand-mark">${escapeHtml(config.brandInitial)}</span>
-            <span class="brand-text">${escapeHtml(config.siteName)}</span>
-          </a>
-          <nav class="site-nav" aria-label="Primary navigation">
-            <a href="index.html" ${page === "home" ? 'aria-current="page"' : ""}>Home</a>
-            <a href="projects.html" ${page === "projects" ? 'aria-current="page"' : ""}>Projects</a>
-            <a href="${mailto()}">Email</a>
-          </nav>
-        </div>
-      </header>
-    `;
+  if (targetTab && typeof targetTab.click === "function") {
+    targetTab.click();
+  } else {
+    // Direct fallback matching the site's actual tab/panel attributes.
+    document.querySelectorAll("[data-project-tab]").forEach((tab) => {
+      tab.classList.toggle("active", tab.dataset.projectTab === projectId);
+    });
+
+    document.querySelectorAll("[data-project-panel]").forEach((panel) => {
+      panel.classList.toggle("active", panel.dataset.projectPanel === projectId);
+    });
+
+    history.replaceState(null, "", `#${projectId}`);
   }
 
-  function renderFooter() {
-    const footer = document.getElementById("site-footer");
-    if (!footer) return;
-
-    footer.innerHTML = `
-      <footer class="site-footer">
-        <div class="container footer-wrap">
-          <p>© ${currentYear} ${escapeHtml(config.ownerName)}. Built for ${escapeHtml(config.siteName)}.</p>
-          <a href="${mailto()}">${escapeHtml(config.email)}</a>
-        </div>
-      </footer>
-    `;
+  const workbench = document.querySelector(".project-workbench") || document.querySelector("[data-project-panels]");
+  if (workbench) {
+    workbench.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+}
 
-  function renderContact(title) {
-    return `
-      <section class="section contact-band" id="contact">
-        <div class="container contact-card">
-          <div>
-            <p class="eyebrow">Contact</p>
-            <h2>${escapeHtml(title)}</h2>
-            <p>${escapeHtml(config.contact.text)}</p>
-          </div>
-          <a class="button button-primary" href="${mailto()}">${escapeHtml(config.contact.button)}</a>
-        </div>
-      </section>
-    `;
-  }
+document.addEventListener('click', (event) => {
+  const card = event.target.closest('[data-project-card-id]');
+  if (!card) return;
 
-  function renderHome() {
-    const main = document.getElementById("main");
-    const featuredProjects = config.projects.filter((project) => project.featured).slice(0, 3);
+  const projectId = card.dataset.projectCardId;
+  if (!projectId) return;
 
-    main.innerHTML = `
-      <section class="hero section">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">${escapeHtml(config.hero.eyebrow)}</p>
-            <h1>${escapeHtml(config.hero.title)}</h1>
-            <p class="hero-lead">${escapeHtml(config.hero.lead)}</p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="projects.html">View Projects</a>
-              <a class="button button-ghost" href="${mailto()}">Contact by Email</a>
-            </div>
-          </div>
+  event.preventDefault();
+  activateProjectFromCard(projectId);
+});
 
-          <div class="hero-card" aria-label="Summary card">
-            <div class="status-row">
-              <span class="status-dot"></span>
-              <span>${escapeHtml(config.hero.status)}</span>
-            </div>
-            <div class="signal-card">
-              <span class="signal-label">${escapeHtml(config.hero.coreFocusLabel)}</span>
-              <strong>${escapeHtml(config.hero.coreFocus)}</strong>
-            </div>
-            <div class="metric-grid">
-              ${config.summaryMetrics.map((metric) => `
-                <div>
-                  <strong>${escapeHtml(metric.title)}</strong>
-                  <span>${escapeHtml(metric.text)}</span>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section class="section compact-section">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Skill Set</p>
-            <h2>Practical infrastructure skills, grouped by real use.</h2>
-          </div>
-          <div class="skill-grid">
-            ${config.skills.map((skill) => `
-              <article class="skill-card">
-                <img src="${escapeHtml(skill.icon)}" alt="" aria-hidden="true" />
-                <h3>${escapeHtml(skill.title)}</h3>
-                <p>${escapeHtml(skill.text)}</p>
-              </article>
-            `).join("")}
-          </div>
-        </div>
-      </section>
-
-      <section class="section featured-section">
-        <div class="container">
-          <div class="section-heading split-heading">
-            <div>
-              <p class="eyebrow">Selected Projects</p>
-              <h2>Small set of projects that show the bigger picture.</h2>
-            </div>
-            <a class="text-link" href="projects.html">See all projects</a>
-          </div>
-          <div class="project-grid three">
-            ${featuredProjects.map((project) => projectCard(project, { linkImage: true })).join("")}
-          </div>
-        </div>
-      </section>
-
-      ${renderContact(config.contact.homeTitle)}
-    `;
-  }
-
-  function renderProjects() {
-    const main = document.getElementById("main");
-    main.innerHTML = `
-      <section class="page-hero section">
-        <div class="container narrow">
-          <p class="eyebrow">Projects</p>
-          <h1>Focused project cards with real technical proof.</h1>
-          <p>A brief overview of the systems, labs, and business-technology projects that represent my practical skill set.</p>
-        </div>
-      </section>
-
-      <section class="section projects-section">
-        <div class="container">
-          <div class="project-grid two">
-            ${config.projects.map((project) => projectCard(project, { large: true, showEyebrow: true })).join("")}
-          </div>
-        </div>
-      </section>
-
-      ${renderContact(config.contact.projectsTitle)}
-    `;
-  }
-
-  renderHeader();
-  renderFooter();
-  if (page === "projects") renderProjects();
-  else renderHome();
-})();
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const card = event.target.closest && event.target.closest('[data-project-card-id]');
+  if (!card) return;
+  event.preventDefault();
+  const projectId = card.dataset.projectCardId;
+  if (projectId) activateProjectFromCard(projectId);
+});

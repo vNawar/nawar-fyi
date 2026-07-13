@@ -3,23 +3,133 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nawar Alhussain — Network & Infrastructure Engineer</title>
-  <meta name="description" content="Infrastructure-focused Computer Engineer with hands-on experience in industrial IT, networking, systems administration, ERP operations, and homelab engineering." />
-  <meta name="theme-color" content="#061817" />
-  <meta property="og:title" content="Nawar Alhussain — Network & Infrastructure Engineer" />
-  <meta property="og:description" content="Industrial IT, networking, systems administration, ERP operations, and self-hosted infrastructure." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://nawar.fyi" />
-  <meta property="og:image" content="https://nawar.fyi/assets/img/og-image.svg" />
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <title>Nawar Alhussain — IT Infrastructure Engineer</title>
+  <meta name="description" content="Nawar Alhussain — IT Infrastructure Engineer focused on networking, systems, virtualization, ERP/data, industrial IT, and technical operations." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body data-page="home">
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div id="site-header"></div>
-  <main id="main"></main>
-  <div id="site-footer"></div>
-  <script src="assets/js/site-config.js"></script>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Nawar Alhussain home">
+        <span class="brand-mark"><img src="assets/img/brand/nw-logo.png" alt="NW logo" /></span>
+        <span>
+          <strong data-site-name>Nawar Alhussain</strong>
+          <span data-site-title>IT Infrastructure Engineer</span>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="active" href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a data-mailto href="mailto:NawarAlhussain@hotmail.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="kicker">Portfolio · Projects · Engineering Work</p>
+          <h1>
+            <span class="muted-line">Nawar Yaser Alhussain</span>
+            <span class="title-line">IT Infrastructure Engineer</span>
+          </h1>
+          <p class="lead" data-hero-summary></p>
+          <div class="chips hero-tags" data-hero-tags></div>
+          <div class="hero-actions">
+            <a class="button primary" href="projects.html">View project showcase</a>
+            <a class="button ghost" data-mailto href="mailto:NawarAlhussain@hotmail.com">Contact by email</a>
+          </div>
+        </div>
+
+        <aside class="proof-board" aria-label="Visual project board">
+          <div class="proof-board-header">
+            <span>Project workboard</span>
+            <div class="window-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="proof-mosaic">
+            <a class="proof-tile large" href="projects.html#industrial-it">
+              <img src="assets/img/projects/industrial-network-cabinet.webp" alt="Industrial IT infrastructure" />
+              <span class="proof-tile-label">Industrial IT</span>
+            </a>
+            <a class="proof-tile" href="projects.html#network-labs">
+              <img src="assets/img/projects/isp-lab-topology.webp" alt="Network lab topology" />
+              <span class="proof-tile-label">Network lab</span>
+            </a>
+            <a class="proof-tile" href="projects.html#homelab-platform">
+              <img src="assets/img/projects/homelab-dashboard.webp" alt="Homelab dashboard" />
+              <span class="proof-tile-label">Infrastructure dashboard</span>
+            </a>
+            <a class="proof-tile wide" href="projects.html#erp-business-systems">
+              <img src="assets/img/projects/powerbi-dashboard.webp" alt="ERP systems dashboard" />
+              <span class="proof-tile-label">ERP / business systems</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Practical infrastructure skills, shown through real project work.</h2>
+        </div>
+        <div class="skill-grid" data-core-skills></div>
+        <div class="skill-cloud-panel reveal">
+          <div class="chips" data-skill-cloud></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured engineering projects.</h2>
+        </div>
+        <div class="project-grid" data-featured-projects></div>
+        <div class="hero-actions">
+          <a class="button primary" href="projects.html">Open full project showcase</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container credential-section">
+        <article class="credential-card reveal">
+          <p class="eyebrow"><span></span>Engineering foundation</p>
+          <h2>B.Sc. Computer Engineering</h2>
+          <p>Formal engineering background from Yanbu University College, reinforced by practical infrastructure, network, systems, and operations work.</p>
+          <div class="chips">
+            <span class="chip">GPA 3.92 / 4.00</span>
+            <span class="chip">Computer Engineering</span>
+            <span class="chip">Saudi Arabia</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-card reveal">
+        <div>
+          <p class="eyebrow"><span></span>Contact</p>
+          <h2>Need practical infrastructure, networking, systems, or technical operations work?</h2>
+        </div>
+        <a class="button primary" data-mailto href="mailto:NawarAlhussain@hotmail.com">Email me</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span>© 2026 <span data-site-name>Nawar Alhussain</span>. Built for <strong>nawar.fyi</strong>.</span>
+      <a data-mailto data-site-email href="mailto:NawarAlhussain@hotmail.com">NawarAlhussain@hotmail.com</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/site-data.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

@@ -4,22 +4,73 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Projects — Nawar Alhussain</title>
-  <meta name="description" content="Selected infrastructure, networking, ERP, WISP, and homelab projects by Nawar Alhussain." />
-  <meta name="theme-color" content="#061817" />
-  <meta property="og:title" content="Projects — Nawar Alhussain" />
-  <meta property="og:description" content="Infrastructure, networking, ERP, WISP, and homelab projects." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://nawar.fyi/projects.html" />
-  <meta property="og:image" content="https://nawar.fyi/assets/img/og-image.svg" />
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Engineering project showcase for Nawar Alhussain: infrastructure, networking, systems, ERP/data, industrial IT, homelab, ISP/WISP, and AI stack." />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body data-page="projects">
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div id="site-header"></div>
-  <main id="main"></main>
-  <div id="site-footer"></div>
-  <script src="assets/js/site-config.js"></script>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Nawar Alhussain home">
+        <span class="brand-mark"><img src="assets/img/brand/nw-logo.png" alt="NW logo" /></span>
+        <span>
+          <strong data-site-name>Nawar Alhussain</strong>
+          <span data-site-title>IT Infrastructure Engineer</span>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="projects.html">Projects</a>
+        <a data-mailto href="mailto:NawarAlhussain@hotmail.com">Email</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <p class="kicker">Project showcase</p>
+        <h1>Systems, screenshots, diagrams, and implementation work.</h1>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="container project-workbench">
+        <aside class="project-tabs" data-project-tabs aria-label="Project tabs"></aside>
+        <div class="project-panels" data-project-panels></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>All project cards.</h2>
+        </div>
+        <div class="project-grid" data-projects-grid></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-card reveal">
+        <div>
+          <p class="eyebrow"><span></span>Contact</p>
+          <h2>Want to discuss infrastructure, networking, systems, or technical operations?</h2>
+          <p>Reach me directly by email.</p>
+        </div>
+        <a class="button primary" data-mailto href="mailto:NawarAlhussain@hotmail.com">Email me</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span>© 2026 <span data-site-name>Nawar Alhussain</span>. Built for <strong>nawar.fyi</strong>.</span>
+      <a data-mailto data-site-email href="mailto:NawarAlhussain@hotmail.com">NawarAlhussain@hotmail.com</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/site-data.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>
