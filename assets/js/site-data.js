@@ -25,7 +25,7 @@ const SITE = {
     },
     {
       "name": "ERP, Data & Reporting",
-      "text": "Onyx ERP/Oracle-backed workflows, ERP access support, purchasing/sales/inventory reporting, data quality, Excel, SQL concepts, and Power BI reporting."
+      "text": "Odoo & Onyx ERP/Oracle-backed workflows, ERP access support, purchasing/sales/inventory reporting, data quality, Excel, SQL concepts, and Power BI reporting."
     },
     {
       "name": "Technical Operations",
@@ -43,11 +43,12 @@ const SITE = {
     "Docker",
     "Portainer",
     "WireGuard",
-        "MikroTik",
+    "MikroTik",
     "DNS/DHCP/NAT",
     "Traefik",
     "Cloudflare",
     "Onyx ERP",
+    "Odoo",
     "Oracle-backed ERP",
     "ERP Support",
     "SQL Concepts",
@@ -159,7 +160,7 @@ const SITE = {
         "Onyx ERP",
         "Oracle Exposure",
         "Power BI",
-        "Inventory",
+        "Odoo",
         "Reporting",
         "SQL Concepts",
         "Process Mapping"
