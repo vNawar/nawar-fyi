@@ -675,3 +675,16 @@ body.lightbox-open {
   outline: 2px solid var(--accent, #37f5d1);
   outline-offset: 4px;
 }
+
+/* Contact and footer link groups */
+.contact-actions,
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  justify-content: flex-end;
+}
